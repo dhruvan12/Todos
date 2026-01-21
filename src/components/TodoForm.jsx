@@ -1,5 +1,8 @@
 import React, { useState } from 'react'
 import { useTodo } from '../context/index';
+import { Input } from './ui/input';
+import { Button } from './ui/button';
+import { Plus } from 'lucide-react';
 
 function TodoForm() {
     const [todo, setTodo] = useState("")
@@ -8,24 +11,30 @@ function TodoForm() {
     const add = (e) => {
         e.preventDefault()
 
-        if (!todo) return
+        if (!todo.trim()) return
 
-        addTodo({ todo, completed: false })
+        addTodo({ todo: todo.trim(), completed: false })
         setTodo("")
     }
 
     return (
-        <form onSubmit={add} className="flex">
-            <input
+        <form onSubmit={add} className="flex gap-2">
+            <Input
                 type="text"
-                placeholder="Write Todo..."
-                className="w-full border border-black/10 rounded-l-lg px-3 outline-none duration-150 bg-white/20 py-1.5"
+                placeholder="What needs to be done?"
+                className="flex-1 h-11 bg-neutral-900/80 border-neutral-700/50 focus:border-neutral-600 text-white placeholder:text-neutral-500"
                 value={todo}
                 onChange={(e) => setTodo(e.target.value)}
             />
-            <button type="submit" className="rounded-r-lg px-3 py-1 bg-green-600 text-white shrink-0">
-                Add
-            </button>
+            <Button 
+                type="submit" 
+                variant="success" 
+                size="lg"
+                className="h-11 px-5 gap-2 font-medium"
+            >
+                <Plus className="w-4 h-4" />
+                Add Task
+            </Button>
         </form>
     );
 }
